@@ -28,6 +28,7 @@ Build a simple blog system with basic user authentication and post management.
 3. **Post Update/Deletion**: Only the post's author can update and delete their posts.
 4. **Post Title**: The length of post titles must be 60 characters or less.
 5. **Drafts and Scheduling**: Posts can be saved as drafts or scheduled for future publishing. These posts are hidden on the post listing page and post detail pages.
+6. **Scheduled Posts**: Scheduled posts should be published automatically when the publish date comes.
 
 ### Others
 
