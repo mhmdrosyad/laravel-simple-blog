@@ -11,7 +11,9 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $posts = Post::ownedBy(Auth::id())->get();
+        $posts = Auth::check()
+            ? Post::ownedBy(Auth::id())->latest()->get()
+            : collect();
         return view('home', compact('posts'));
     }
 }
