@@ -18,8 +18,14 @@
             @endguest
             @auth
                 {{-- for authenticated users --}}
+
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="space-y-6 p-6">
+                    <div class="mx-auto">
+                        @foreach(['success', 'error', 'warning', 'info'] as $msg)
+                            <x-flash-message type="{{ $msg }}" />
+                        @endforeach
+                    </div>
+                    <div class="mt-4 space-y-6 p-6">
                         <h2 class="text-lg font-semibold">Your Posts</h2>
                         @if(isset($posts))
                         @php
