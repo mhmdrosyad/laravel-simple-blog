@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +36,9 @@ class StorePostRequest extends FormRequest
         return [
             ...$this->validated(),
             'user_id' => Auth::id(),
+            'published_at' => $this->filled('published_at')
+                ? Carbon::parse($this->published_at)
+                : Carbon::now(),
             'status' => $this->is_draft ? 'draft' : 'published',
         ];
     }
