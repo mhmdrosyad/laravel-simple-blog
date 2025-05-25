@@ -10,9 +10,7 @@ Route::get('/', function () {
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
-Route::get('/posts/create', function () {
-    return view('posts.create');
-})->name('posts.create');
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth')->name('posts.create');
 
 Route::get('/posts/show/{post}', [PostController::class, 'show'])->name('posts.show');
 
@@ -20,7 +18,7 @@ Route::get('/posts/edit', function () {
     return view('posts.edit');
 });
 
-Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show');
+Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show', 'create');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
