@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorePostRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,19 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:60'],
+            'content' => ['required', 'string'],
+            'is_draft' => ['nullable', 'boolean'],
+            'published_at' => ['nullable', 'date']
+        ];
+    }
+
+    public function data(): array
+    {
+        return [
+            ...$this->validated(),
+            'user_id' => Auth::id(),
+            'status' => $this->is_draft ? 'draft' : 'published',
         ];
     }
 }

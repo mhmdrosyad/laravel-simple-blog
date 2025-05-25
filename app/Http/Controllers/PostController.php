@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -29,7 +31,18 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        try {
+            Post::create($request->data());
+
+            return to_route('posts.index')->with('success', 'Post berhasil dibuat.');
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan post', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id(),
+            ]);
+
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan post.');
+        }
     }
 
     /**
