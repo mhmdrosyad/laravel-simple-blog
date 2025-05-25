@@ -38,7 +38,7 @@ class PostController extends Controller
         try {
             Post::create($request->data());
 
-            return to_route('posts.index')->with('success', 'Post berhasil dibuat.');
+            return to_route('home')->with('success', 'Post berhasil dibuat.');
         } catch (\Exception $e) {
             Log::error('Gagal menyimpan post', [
                 'error' => $e->getMessage(),

@@ -31,4 +31,17 @@ class Post extends Model
     {
         return $query->where('user_id', $userId);
     }
+
+    public function getDisplayStatusAttribute(): string
+    {
+        if ($this->status === 'draft') {
+            return 'draft';
+        }
+
+        if ($this->published_at && Carbon::parse($this->published_at)->isFuture()) {
+            return 'schedule';
+        }
+
+        return 'active';
+    }
 }

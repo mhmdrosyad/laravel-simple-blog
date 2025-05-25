@@ -22,10 +22,20 @@
                     <div class="space-y-6 p-6">
                         <h2 class="text-lg font-semibold">Your Posts</h2>
                         @if(isset($posts))
+                        @php
+                            $statusColors = [
+                                'active' => 'bg-green-100 text-green-800',
+                                'draft' => 'bg-gray-100 text-gray-800',
+                                'schedule' => 'bg-yellow-100 text-yellow-800',
+                            ];
+                        @endphp
                         @foreach($posts as $post)
+
                         <div class="rounded-md border p-5 shadow">
                             <div class="flex items-center gap-2">
-                                <span class="flex-none rounded bg-green-100 px-2 py-1 text-green-800">Active</span>
+                                <span class="flex-none rounded px-2 py-1 {{ $statusColors[$post->display_status] ?? 'bg-gray-100 text-gray-800' }}">
+                                    {{ $post->display_status }}
+                                </span>
                                 <h3><a href="{{ route('posts.show', $post->id) }}" class="text-blue-500">{{ $post->title }}</a></h3>
                             </div>
                             <div class="mt-4 flex items-end justify-between">
