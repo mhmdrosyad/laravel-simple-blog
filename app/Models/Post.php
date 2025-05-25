@@ -26,4 +26,9 @@ class Post extends Model
                     ->orWhere('published_at', '<=', Carbon::now());
             });
     }
+
+    public function scopeOwnedBy($query, $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
 }
