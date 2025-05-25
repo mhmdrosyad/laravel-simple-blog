@@ -8,9 +8,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/posts', function () {
-    return view('posts.index');
-})->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/posts/create', function () {
     return view('posts.create');
