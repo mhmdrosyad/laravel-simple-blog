@@ -14,9 +14,7 @@ Route::get('/posts/create', function () {
     return view('posts.create');
 })->name('posts.create');
 
-Route::get('/posts/show', function () {
-    return view('posts.show');
-});
+Route::get('/posts/show/{post}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/posts/edit', function () {
     return view('posts.edit');
