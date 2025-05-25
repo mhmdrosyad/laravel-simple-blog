@@ -24,7 +24,7 @@ Route::get('/posts/edit', function () {
     return view('posts.edit');
 });
 
-Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'create');
+Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
