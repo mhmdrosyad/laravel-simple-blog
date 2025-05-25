@@ -62,9 +62,9 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -72,7 +72,19 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+        try {
+            $post->update($request->data());
+
+            return to_route('home')->with('success', 'Post berhasil diupdate.');
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan post', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id(),
+            ]);
+
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan post.');
+        }
     }
 
     /**

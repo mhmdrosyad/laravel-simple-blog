@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdatePostRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,22 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:60'],
+            'content' => ['required', 'string'],
+            'is_draft' => ['nullable', 'boolean'],
+            'published_at' => ['nullable', 'date']
+        ];
+    }
+
+    public function data(): array
+    {
+        return [
+            ...$this->validated(),
+            'user_id' => Auth::id(),
+            'published_at' => $this->filled('published_at')
+                ? Carbon::parse($this->published_at)
+                : Carbon::now(),
+            'status' => $this->is_draft ? 'draft' : 'published',
         ];
     }
 }

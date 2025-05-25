@@ -13,10 +13,6 @@ Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth
 
 Route::get('/posts/show/{post}', [PostController::class, 'show'])->name('posts.show');
 
-Route::get('/posts/edit', function () {
-    return view('posts.edit');
-});
-
 Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show', 'create');
 
 Route::middleware('auth')->group(function () {
