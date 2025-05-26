@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,9 @@ class PostController extends Controller
      */
     public function show(Post $post): View
     {
-        $this->authorize('view', $post);
+        if ($post->status === 'draft' || Carbon::parse($post->published_at)?->isAfter(today())) {
+            abort(403);
+        }
         return view('posts.show', compact('post'));
     }
 
