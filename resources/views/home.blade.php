@@ -42,7 +42,7 @@
                                 <span class="flex-none rounded px-2 py-1 {{ $statusColors[$post->display_status] ?? 'bg-gray-100 text-gray-800' }}">
                                     {{ $post->display_status }}
                                 </span>
-                                <h3><a href="{{ route('posts.show', $post->id) }}" class="text-blue-500">{{ $post->title }}</a></h3>
+                                <h3><a href="{{ route('posts.edit', $post->id) }}" class="text-blue-500">{{ $post->title }}</a></h3>
                             </div>
                             <div class="mt-4 flex items-end justify-between">
                                 <div>
