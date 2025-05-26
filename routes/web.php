@@ -7,13 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-
-Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth')->name('posts.create');
-
-Route::get('/posts/show/{post}', [PostController::class, 'show'])->name('posts.show');
-
-Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show', 'create');
+Route::resource('posts', PostController::class)->middleware('auth')->except('index', 'show');
+Route::resource('/posts', PostController::class)->only('index', 'show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
