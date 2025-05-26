@@ -18,4 +18,17 @@ class PostPolicy
     {
         return $user->id === $post->user_id;
     }
+
+    public function view(?User $user, Post $post)
+    {
+        if ($post->status === 'draft') {
+            return false;
+        }
+
+        if (Carbon::parse($post->published_at)?->isAfter(today())) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -57,9 +57,7 @@ class PostController extends Controller
      */
     public function show(Post $post): View
     {
-        if ($post->status === 'draft' || Carbon::parse($post->published_at)?->isAfter(today())) {
-            abort(403);
-        }
+        $this->authorize('view', $post);
         return view('posts.show', compact('post'));
     }
 
